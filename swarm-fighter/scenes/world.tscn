@@ -1,0 +1,70 @@
+[gd_scene load_steps=10 format=3 uid="uid://ci4w6gxsyoann"]
+
+[ext_resource type="Script" uid="uid://dxclsknsjeov5" path="res://scripts/world.gd" id="1_k0juu"]
+[ext_resource type="PackedScene" uid="uid://db48llfdeaagf" path="res://scenes/drone.tscn" id="2_71j4m"]
+[ext_resource type="Script" uid="uid://cplsyfk1a68ac" path="res://scripts/fire_manager.gd" id="3_qfnet"]
+[ext_resource type="PackedScene" uid="uid://c7l6b4k17k1an" path="res://scenes/fire_zone.tscn" id="4_i7141"]
+[ext_resource type="Script" uid="uid://nysg6ufsgtc3" path="res://free_camera.gd" id="5_71j4m"]
+
+[sub_resource type="Environment" id="Environment_4mrxx"]
+background_mode = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7r4gi"]
+albedo_color = Color(0.5137255, 0.5764706, 0.050980393, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_w7kh3"]
+material = SubResource("StandardMaterial3D_7r4gi")
+size = Vector2(150, 150)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_e3hyu"]
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_k0juu")
+drone_scene = ExtResource("2_71j4m")
+start_altitude = 1.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_4mrxx")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.70710677, -0.49999997, 0.49999997, 0, 0.70710677, 0.70710677, -0.70710677, -0.49999997, 0.49999997, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("PlaneMesh_w7kh3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("WorldBoundaryShape3D_e3hyu")
+
+[node name="Drones" type="Node3D" parent="."]
+
+[node name="FireManager" type="Node3D" parent="."]
+script = ExtResource("3_qfnet")
+fire_zone_scene = ExtResource("4_i7141")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.9063077, 0.42261824, 0, -0.42261824, 0.9063077, 40, 40, 80)
+script = ExtResource("5_71j4m")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="ResetButton" type="Button" parent="UI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1252.0
+offset_top = 10.0
+offset_right = -1201.0
+offset_bottom = 41.0
+grow_horizontal = 0
+text = "Reset"
+
+[node name="StatusPanel" type="VBoxContainer" parent="UI"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 50.0
+offset_bottom = 50.0

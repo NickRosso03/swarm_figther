@@ -1,0 +1,55 @@
+[gd_scene load_steps=6 format=3 uid="uid://c7l6b4k17k1an"]
+
+[ext_resource type="Script" uid="uid://dlgsffysjpjwj" path="res://scripts/fire_zone.gd" id="1_t5u7e"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_48gl5"]
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+direction = Vector3(0, 1, 0)
+spread = 40.0
+initial_velocity_min = 2.0
+initial_velocity_max = 5.0
+gravity = Vector3(0, -1, 0)
+radial_accel_min = -1.0000023
+radial_accel_max = -2.2351742e-06
+scale_min = 0.29999998
+scale_max = 0.79999995
+color = Color(1, 0.050000012, 0, 1)
+hue_variation_min = 0.119999975
+hue_variation_max = 0.119999975
+turbulence_noise_scale = 10.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oakt0"]
+transparency = 1
+blend_mode = 1
+albedo_color = Color(1, 0.050000012, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kvjp3"]
+material = SubResource("StandardMaterial3D_oakt0")
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_r0ls1"]
+radius = 5.0
+
+[node name="FireZone" type="Node3D"]
+script = ExtResource("1_t5u7e")
+
+[node name="Particles" type="GPUParticles3D" parent="."]
+amount = 64
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_48gl5")
+draw_pass_1 = SubResource("BoxMesh_kvjp3")
+
+[node name="DetectionArea" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionArea"]
+shape = SubResource("SphereShape3D_r0ls1")
+
+[node name="Label3D" type="Label3D" parent="."]
+pixel_size = 0.05
+offset = Vector2(0, 100)
+billboard = 1
+modulate = Color(1, 0.91764706, 0.08235294, 1)
+outline_modulate = Color(0.8509804, 0, 0, 1)
+text = "FIRE
+"

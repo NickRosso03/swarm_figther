@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://db48llfdeaagf"]
+
+[ext_resource type="Script" uid="uid://cdlucxhr0gick" path="res://scripts/drone.gd" id="1_dil0n"]
+[ext_resource type="ArrayMesh" uid="uid://urm8j2jbfjx0" path="res://assets/3dr_arducopter_quad_x.obj" id="2_knnud"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_knnud"]
+points = PackedVector3Array(-0.275, -0.306, -0.114, 0.235, 0.327, -0.114, 0.163, 0.173, 0.008, 0.306, -0.275, -0.114, -0.306, 0.275, -0.114, -0.163, -0.173, 0.008, 0.038, 0.038, -0.15, -0.163, 0.173, 0.008, 0.163, -0.173, 0.008, 0.327, 0.235, -0.114, -0.327, -0.235, -0.114, 0.235, -0.327, -0.114, -0.235, 0.327, -0.114, -0.038, -0.038, -0.15, 0.327, -0.235, -0.114, -0.327, 0.235, -0.114, -0.235, -0.327, -0.114, -0.173, 0.163, 0.008, 0.173, -0.163, 0.008, -0.214, 0.298, -0.12, 0.214, -0.298, -0.12, -0.173, -0.163, 0.008, -0.298, 0.214, -0.12, 0.298, -0.214, -0.12, 0.173, 0.163, 0.008, 0.038, -0.038, -0.15, -0.038, 0.038, -0.15, 0.214, 0.298, -0.12, 0.298, 0.214, -0.12, -0.298, -0.214, -0.12, -0.214, -0.298, -0.12, 0.296, 0.286, -0.114)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_knnud"]
+shading_mode = 0
+albedo_color = Color(1.0569379, 1.0569379, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1r4ts"]
+material = SubResource("StandardMaterial3D_knnud")
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_umx5g"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_1r4ts"]
+points = PackedVector3Array(-0.275462, -0.306083, -0.114254, 0.234676, 0.326539, -0.114254, 0.163206, 0.173434, 0.00818244, 0.306083, -0.275462, -0.114254, -0.306083, 0.275462, -0.114254, -0.163206, -0.173434, 0.00818244, 0.0382516, 0.0382516, -0.15, -0.163206, 0.173434, 0.00818244, 0.163206, -0.173434, 0.00818244, 0.326539, 0.234676, -0.114254, -0.326539, -0.234676, -0.114254, 0.234676, -0.326539, -0.114254, -0.234676, 0.326539, -0.114254, -0.0382516, -0.0382516, -0.15, 0.326539, -0.234676, -0.114254, -0.326539, 0.234676, -0.114254, -0.234676, -0.326539, -0.114254, -0.173434, 0.163206, 0.00818244, 0.173434, -0.163206, 0.00818244, -0.214134, 0.297956, -0.12, 0.214134, -0.297956, -0.12, -0.173434, -0.163206, 0.00818244, -0.297956, 0.214134, -0.12, 0.297956, -0.214134, -0.12, 0.173434, 0.163206, 0.00818244, 0.0382516, -0.0382516, -0.15, -0.0382516, 0.0382516, -0.15, 0.214134, 0.297956, -0.12, 0.297956, 0.214134, -0.12, -0.297956, -0.214134, -0.12, -0.214134, -0.297956, -0.12, 0.295918, 0.28569, -0.114254)
+
+[node name="Drone" type="RigidBody3D"]
+mass = 1.5
+linear_damp = 0.5
+angular_damp = 1.0
+script = ExtResource("1_dil0n")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+visible = false
+mesh = ExtResource("2_knnud")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+visible = false
+shape = SubResource("ConvexPolygonShape3D_knnud")
+debug_color = Color(0.9411765, 0.6, 0.69803923, 1)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("BoxMesh_1r4ts")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+visible = false
+shape = SubResource("BoxShape3D_umx5g")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+mesh = ExtResource("2_knnud")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_1r4ts")

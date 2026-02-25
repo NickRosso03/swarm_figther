@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bbmj6rjyosvs4"]
+
+[ext_resource type="Script" uid="uid://cdlucxhr0gick" path="res://scripts/drone.gd" id="1_x0dmg"]
+[ext_resource type="PackedScene" uid="uid://c562o4ikhmja3" path="res://scenes/model.tscn" id="2_x0dmg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f4gsr"]
+size = Vector3(0.8, 0.3, 0.8)
+
+[node name="Drone2" type="RigidBody3D"]
+mass = 1.5
+linear_damp = 0.5
+angular_damp = 1.0
+script = ExtResource("1_x0dmg")
+
+[node name="Sketchfab_Scene" parent="." instance=ExtResource("2_x0dmg")]
+transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1, 0)
+shape = SubResource("BoxShape3D_f4gsr")

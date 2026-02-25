@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=3 uid="uid://c562o4ikhmja3"]
+
+[ext_resource type="PackedScene" uid="uid://derw036s5415v" path="res://assets/animated_drone/scene.gltf" id="1_nvfas"]
+
+[node name="Sketchfab_Scene" instance=ExtResource("1_nvfas")]
+
+[node name="Skeleton3D" parent="Sketchfab_model/root/GLTF_SceneRootNode/RootNode_0_0/skeletal_1_1/GLTF_created_0" index="0"]
+bones/2/position = Vector3(-0.6818552, 16.572578, 0.26075175)
+bones/2/rotation = Quaternion(0.00761055, 0.0039199893, -0.009394137, 0.9999193)
+bones/25/position = Vector3(-8.539107, -0.1967187, 7.2664804)
+bones/26/position = Vector3(-8.539093, 0.019478083, 7.266471)
+bones/27/position = Vector3(-8.539107, -0.1967187, -7.2664804)
+bones/28/position = Vector3(-8.539093, 0.019478083, -7.266471)
+bones/29/position = Vector3(8.539093, 0.019478083, -7.266471)
+bones/30/position = Vector3(8.539107, -0.1967187, -7.2664804)
+bones/31/position = Vector3(8.539107, -0.1967187, 7.2664804)
+bones/32/position = Vector3(8.539093, 0.019478083, 7.266471)
+bones/33/rotation = Quaternion(-2.6675905e-17, 0.86181974, 2.4564673e-17, 0.50721467)
+bones/34/rotation = Quaternion(-2.6675905e-17, 0.86181974, 2.4564673e-17, 0.50721467)
+bones/35/rotation = Quaternion(-2.6675905e-17, 0.86181974, 2.4564673e-17, 0.50721467)
+bones/36/rotation = Quaternion(-2.6675905e-17, 0.86181974, 2.4564673e-17, 0.50721467)
+bones/37/rotation = Quaternion(1.7232879e-17, -0.8553974, 1.9724262e-17, 0.5179722)
+bones/38/rotation = Quaternion(1.7232879e-17, -0.8553974, 1.9724262e-17, 0.5179722)
+bones/41/rotation = Quaternion(-2.6675905e-17, 0.86181974, 2.4564673e-17, 0.50721467)
+bones/42/rotation = Quaternion(-2.6675905e-17, 0.86181974, 2.4564673e-17, 0.50721467)
+bones/43/rotation = Quaternion(1.7232879e-17, -0.8553974, 1.9724262e-17, 0.5179722)
+bones/44/rotation = Quaternion(1.7232879e-17, -0.8553974, 1.9724262e-17, 0.5179722)
+bones/47/rotation = Quaternion(0, -0.26799724, 0, 0.9634197)
+bones/48/position = Vector3(6.201625, 0, -5.877968)
+bones/48/rotation = Quaternion(0, 0.26799724, 0, 0.9634197)
+bones/49/position = Vector3(6.201625, 0, 5.877968)
+bones/54/rotation = Quaternion(1.5767534e-18, 7.866697e-19, -0.08054753, 0.99675083)
+bones/55/rotation = Quaternion(0.21669842, 2.9386082e-19, -2.184744e-18, 0.9762386)
+bones/63/position = Vector3(0, 0, 0)
+bones/69/position = Vector3(0, 0, 0)
+bones/83/position = Vector3(0, -0.26040244, 0)
+
+[node name="AnimationPlayer" parent="." index="1"]
+autoplay = "hover"

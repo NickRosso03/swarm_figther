@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://ci4w6gxsyoann"]
 
 [ext_resource type="Script" uid="uid://dxclsknsjeov5" path="res://scripts/world.gd" id="1_k0juu"]
-[ext_resource type="PackedScene" uid="uid://db48llfdeaagf" path="res://scenes/drone.tscn" id="2_71j4m"]
+[ext_resource type="PackedScene" uid="uid://bbmj6rjyosvs4" path="res://scenes/drone_2.tscn" id="2_71j4m"]
 [ext_resource type="Script" uid="uid://cplsyfk1a68ac" path="res://scripts/fire_manager.gd" id="3_qfnet"]
 [ext_resource type="PackedScene" uid="uid://c7l6b4k17k1an" path="res://scenes/fire_zone.tscn" id="4_i7141"]
 [ext_resource type="Script" uid="uid://nysg6ufsgtc3" path="res://free_camera.gd" id="5_71j4m"]

@@ -71,7 +71,7 @@ class MultirotorController:
         self.vz_control = PI_Controller(kp=5.0, ki=2.0, sat=5.0)
 
         # POSIZIONE XY — solo P, nessun integrale (evita windup)
-        self.x_control  = P_Controller(kp=1.0, sat=3.0) # prima: kp=0.5, sat=1.5
+        self.x_control  = P_Controller(kp=0.5, sat=3.0) # prima: kp=0.5, sat=1.5
         self.y_control  = P_Controller(kp=0.5, sat=1.5)
         self.vx_control = P_Controller(kp=0.4, sat=math.radians(15))#prima 8
         self.vy_control = P_Controller(kp=0.4, sat=math.radians(8))

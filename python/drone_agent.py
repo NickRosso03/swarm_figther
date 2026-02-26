@@ -344,7 +344,7 @@ class DroneAgent:
     def _check_fire(self):
         fire_id = self.dds.read("world/fire_new") or 0.0
         resolved_id = self.dds.read("world/fire_resolved") or 0.0
-        if fire_id == 0.0:
+        if fire_id == 0.0 or fire_id == resolved_id:
             return
         if fire_id == self.fire_id:
             return

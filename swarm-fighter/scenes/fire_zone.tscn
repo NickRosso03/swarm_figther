@@ -43,7 +43,6 @@ process_material = SubResource("ParticleProcessMaterial_48gl5")
 draw_pass_1 = SubResource("BoxMesh_kvjp3")
 
 [node name="DetectionArea" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.030417, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionArea"]
 shape = SubResource("SphereShape3D_r0ls1")

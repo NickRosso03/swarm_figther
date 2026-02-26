@@ -16,7 +16,7 @@ class CoveragePlanner:
     @staticmethod
     def get_sector(drone_id: int,
                    n_drones: int,
-                   area_size: float = 80.0,
+                   area_size: float = 150.0,
                    altitude: float  = 8.0,
                    row_spacing: float = 8.0) -> list:
         """
@@ -24,15 +24,16 @@ class CoveragePlanner:
         L'area totale [0, area_size] x [0, area_size] viene divisa in
         n_drones strisce verticali (lungo X).
         """
+        offset = area_size / 2.0  # <-- AGGIUNTO
         sw      = area_size / n_drones
-        x_start = drone_id * sw + sw * 0.1
-        x_end   = drone_id * sw + sw * 0.9
+        x_start = (drone_id * sw + sw * 0.1)-offset#M
+        x_end   = (drone_id * sw + sw * 0.9)-offset#
 
         n_rows    = max(1, int(area_size / row_spacing))
         waypoints = []
 
         for row in range(n_rows):
-            z = row * row_spacing
+            z = (row * row_spacing)-offset #M
             if row % 2 == 0:
                 waypoints.append([x_start, z])
                 waypoints.append([x_end,   z])

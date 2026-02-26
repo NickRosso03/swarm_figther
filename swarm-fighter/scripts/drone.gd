@@ -22,6 +22,18 @@ extends RigidBody3D
 @export var drone_id   : int   = 0
 @export var arm_length : float = 0.195
 
+@onready var mini_hud : Label3D = $MiniHUD
+@onready var water_cannon : Node3D = $WaterCannon
+@onready var foam_particles : GPUParticles3D = $WaterCannon/FoamParticles
+
+const STATUS_NAMES := {
+	0.0: "IDLE/TAKEOFF",
+	1.0: "EXPLORING",
+	2.0: "MOVING",
+	3.0: "RETURNING",
+	4.0: "SUPPRESSING" # Nuovo stato
+}
+
 var _prefix  : String
 var _p1      : Vector3
 var _p2      : Vector3
@@ -52,7 +64,13 @@ func _ready() -> void:
 	DDS.subscribe("%s/f2" % _prefix)
 	DDS.subscribe("%s/f3" % _prefix)
 	DDS.subscribe("%s/f4" % _prefix)
-
+	
+	DDS.subscribe("%s/status" % _prefix)
+	DDS.subscribe("%s/fire_x" % _prefix)
+	DDS.subscribe("%s/fire_y" % _prefix)
+	DDS.subscribe("%s/fire_z" % _prefix)
+	
+	
 
 func _physics_process(_delta: float) -> void:
 	_f1 = DDS.read("%s/f1" % _prefix)
@@ -72,6 +90,13 @@ func _physics_process(_delta: float) -> void:
 	_apply_motor_force(_f2, _p2)
 	_apply_motor_force(_f3, _p3)
 	_apply_motor_force(_f4, _p4)
+	
+	# Coppia aerodinamica moderata
+	#var drag_coeff := 0.1  
+	#var yaw_torque := (_f1 - _f2 + _f3 - _f4) * drag_coeff
+	#apply_torque(transform.basis * Vector3(0.0, yaw_torque, 0.0))
+	
+	
 
 	_publish_state()
 
@@ -118,3 +143,27 @@ func reset() -> void:
 	DDS.clear("%s/f2" % _prefix)
 	DDS.clear("%s/f3" % _prefix)
 	DDS.clear("%s/f4" % _prefix)
+	
+	
+func _process(_delta: float) -> void:
+	# 1. Aggiorna il Mini HUD
+	var status : float = DDS.read("%s/status" % _prefix)
+	mini_hud.text = STATUS_NAMES.get(status, "UNK") + _prefix
+	
+	# 2. Gestisci le particelle d'acqua
+	if status == 4.0: # SUPPRESSING
+		if not foam_particles.emitting:
+			foam_particles.emitting = true
+			
+		# Leggi le coordinate dell'incendio assegnato al drone
+		var fx = DDS.read("%s/fire_x" % _prefix)
+		var fy = DDS.read("%s/fire_y" % _prefix)
+		var fz = DDS.read("%s/fire_z" % _prefix)
+		var fire_pos = Vector3(fx, fy, fz)
+		
+		# Fai ruotare il "cannone" per guardare verso l'incendio.
+		# L'asse Z negativo (-Z) del WaterCannon punterà dritto verso il fuoco.
+		water_cannon.look_at(fire_pos, Vector3.UP)
+	else:
+		if foam_particles.emitting:
+			foam_particles.emitting = false

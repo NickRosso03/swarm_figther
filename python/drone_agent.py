@@ -62,7 +62,7 @@ class StateCode:
     HOVERING    = 0.0   # non disponibile durante stabilizzazione
     EXPLORING   = 1.0
     MOVING      = 2.0
-    SUPPRESSING = 2.0
+    SUPPRESSING = 4.0
     RETURNING   = 3.0
 
 class State:
@@ -112,7 +112,7 @@ class DroneAgent:
 
         # Piano di perlustrazione
         self.waypoints = CoveragePlanner.get_sector(
-            drone_id, n_drones, area_size=80.0, altitude=TAKEOFF_ALT)
+            drone_id, n_drones, area_size=150.0, altitude=TAKEOFF_ALT)
         self._wp_idx   = 0
 
         # Quota di decollo per il controller
@@ -301,6 +301,16 @@ class DroneAgent:
         if self.target_fire is None:
             self.state = State.EXPLORING
             return
+        
+        # -- AGGIUNTO: Interrompi se il fuoco è già stato spento da altri
+        resolved_id = self.dds.read("world/fire_resolved") or 0.0
+        if resolved_id == self.fire_id:
+            self.log.info(f"Fuoco {self.fire_id:.0f} spento da alleati. Annullamento.")
+            self.target_fire = None
+            self.fire_id = None
+            self.state = State.RETURNING
+            return
+
         fx, _, fz = self.target_fire
         if self._dist2d([self.x, self.z], [fx, fz]) < FIRE_RADIUS:
             self.log.info(f"Sopra fuoco {self.fire_id:.0f}. Soppressione.")
@@ -320,6 +330,10 @@ class DroneAgent:
 
     def _do_returning(self):
         wp = self.waypoints[self._wp_idx]
+
+        # -- AGGIUNTO: Dobbiamo dire al controller di muoversi fisicamente verso il WP
+        self.ctrl.set_target(x=wp[0], y=wp[1])
+
         if self._dist2d([self.x, self.z], wp) < WAYPOINT_RADIUS * 3:
             self.state = State.EXPLORING
 
@@ -329,6 +343,7 @@ class DroneAgent:
 
     def _check_fire(self):
         fire_id = self.dds.read("world/fire_new") or 0.0
+        resolved_id = self.dds.read("world/fire_resolved") or 0.0
         if fire_id == 0.0:
             return
         if fire_id == self.fire_id:
@@ -435,6 +450,11 @@ class DroneAgent:
         self.dds.publish(f"{p}/fire_x", fx)
         self.dds.publish(f"{p}/fire_y", fy)
         self.dds.publish(f"{p}/fire_z", fz)
+
+        # --- NUOVE RIGHE PER IL DEBUG ---
+        # Il target y del controller equivale all'asse Z di Godot
+        self.dds.publish(f"{p}/tgt_x", self.ctrl.x_target)
+        self.dds.publish(f"{p}/tgt_z", self.ctrl.y_target)
 
     # =======================================================================
     # Utility

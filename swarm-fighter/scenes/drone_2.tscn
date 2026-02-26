@@ -1,10 +1,28 @@
-[gd_scene load_steps=4 format=3 uid="uid://bbmj6rjyosvs4"]
+[gd_scene load_steps=7 format=3 uid="uid://bbmj6rjyosvs4"]
 
 [ext_resource type="Script" uid="uid://cdlucxhr0gick" path="res://scripts/drone.gd" id="1_x0dmg"]
 [ext_resource type="PackedScene" uid="uid://c562o4ikhmja3" path="res://scenes/model.tscn" id="2_x0dmg"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f4gsr"]
 size = Vector3(0.8, 0.3, 0.8)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_x0dmg"]
+emission_shape = 3
+emission_box_extents = Vector3(0.2, 0.2, 0.2)
+angle_min = -720.0
+angle_max = 720.0
+inherit_velocity_ratio = 8.0
+direction = Vector3(-1, 0, -1)
+gravity = Vector3(0, -4, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x0dmg"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_f4gsr"]
+material = SubResource("StandardMaterial3D_x0dmg")
+size = Vector3(0.1, 0.1, 0.1)
 
 [node name="Drone2" type="RigidBody3D"]
 mass = 1.5
@@ -18,3 +36,20 @@ transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1, 0)
 shape = SubResource("BoxShape3D_f4gsr")
+
+[node name="MiniHUD" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+billboard = 1
+text = "D"
+
+[node name="WaterCannon" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+
+[node name="FoamParticles" type="GPUParticles3D" parent="WaterCannon"]
+emitting = false
+amount = 100
+lifetime = 3.0
+speed_scale = 2.0
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_x0dmg")
+draw_pass_1 = SubResource("BoxMesh_f4gsr")

@@ -14,8 +14,8 @@ extends Node3D
 # Parametri (modificabili dall'Inspector)
 # ---------------------------------------------------------------------------
 @export var fire_zone_scene  : PackedScene          # assegna fire_zone.tscn
-@export var area_min         : Vector2 = Vector2(5.0,  5.0)   # angolo SW area
-@export var area_max         : Vector2 = Vector2(75.0, 75.0)  # angolo NE area
+@export var area_min         : Vector2 = Vector2(-75.0,  75.0)   # angolo SW area
+@export var area_max         : Vector2 = Vector2(75.0, -75.0)  # angolo NE area
 @export var min_interval     : float   = 10.0  # [s] intervallo minimo tra spawn
 @export var max_interval     : float   = 25.0  # [s] intervallo massimo
 @export var max_active_fires : int     = 3     # incendi contemporanei massimi

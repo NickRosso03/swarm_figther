@@ -72,9 +72,9 @@ class MultirotorController:
 
         # POSIZIONE XY — solo P, nessun integrale (evita windup)
         self.x_control  = P_Controller(kp=0.5, sat=3.0) # prima: kp=0.5, sat=1.5
-        self.y_control  = P_Controller(kp=0.5, sat=1.5)
+        self.y_control  = P_Controller(kp=0.5, sat=3.0) 
         self.vx_control = P_Controller(kp=0.4, sat=math.radians(15))#prima 8
-        self.vy_control = P_Controller(kp=0.4, sat=math.radians(8))
+        self.vy_control = P_Controller(kp=0.4, sat=math.radians(15))
 
         # ATTITUDE — P per angolo, PD per rate (NO integrali nel loop veloce)
         self.roll_control  = P_Controller(kp=4.0, sat=2.0)
